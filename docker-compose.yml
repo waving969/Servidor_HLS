@@ -1,0 +1,25 @@
+version: '3.1'
+
+services:
+  nginx1:
+    image: nginx:pf
+    ports:
+      - 8080:80
+      - 8081:443
+    networks:
+      red_web: 
+        ipv4_address: 192.168.10.2
+
+networks:
+  red_web:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.10.0/24
+  red_servicios:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.20.0/24
