@@ -2,7 +2,7 @@ FROM ubuntu:14.04
 MAINTAINER Juan Navarro Maldonado y Joaquin Sergio Garcia Ibañez
 
 # update, wget, gcc, g++, build essential
-RUN apt update && apt-get install build-essential libpcre2-dev
+RUN apt update && apt-get install -y build-essential systemd wget
 
 RUN apt-get update && \
     apt-get install -y \
@@ -17,10 +17,11 @@ RUN apt-get update && \
     gnupg2 \
     ca-certificates
 
-COPY nginx.conf etc/nginx/nginx.conf
+#RUN mv /etc/nginx.conf /etc/nginx.conf.old
+COPY nginx.service etc/nginx/nginx.service
 COPY scriptConf.sh ./
 
-#RUN chmod +x scriptConf.sh 
+RUN chmod +x scriptConf.sh 
 
 EXPOSE 443
 EXPOSE 80

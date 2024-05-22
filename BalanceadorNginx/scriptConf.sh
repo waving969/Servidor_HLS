@@ -42,13 +42,9 @@ cd nginx-1.22.1
 
 make && make install
 
-#mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.old
+mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.old
 
-#nano /lib/systemd/system/nginx.service
 
-sudo su
-nano /etc/nginx/nginx.conf
-nano /etc/netplan/pulsa tabulación para completar ruta
 netplan apply
 systemctl daemon-reload
 systemctl enable nginx
