@@ -19,6 +19,10 @@ RUN apt-get update && \
 
 #RUN mv /etc/nginx.conf /etc/nginx.conf.old
 COPY nginx.service etc/nginx/nginx.service
+#Copiar el archivo de configuracion de proxy que hemos creado
+
+COPY proxy.conf /etc/nginx/nginx.conf
+
 COPY scriptConf.sh ./
 
 RUN chmod +x scriptConf.sh 

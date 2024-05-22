@@ -1,15 +1,35 @@
-# Usa la imagen base de Ubuntu
-FROM ubuntu:latest
-
+FROM ubuntu:14.04
 MAINTAINER Juan Navarro Maldonado y Joaquin Sergio Garcia Ibañez
 
-# Actualiza los repositorios de paquetes e instala los paquetes necesarios
+# update, wget, gcc, g++, build essential
+RUN apt update && apt-get install -y build-essential systemd wget
+
 RUN apt-get update && \
     apt-get install -y \
+    libpcre3 \
+    libpcre3-dev \
+    zlib1g \
+    zlib1g-dev \
+    libssl-dev \
+    build-essential \
+    wget \
     curl \
-    vim \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    gnupg2 \
+    ca-certificates
+
+#RUN mv /etc/nginx.conf /etc/nginx.conf.old
+COPY nginx.service etc/nginx/nginx.service
+#Copiar el archivo de configuracion de proxy que hemos creado
 
 
-COPY vod.conf /app/vod.conf
+COPY scriptConf.sh ./
+
+
+RUN chmod +x scriptConf.sh  && ./scriptConf.sh
+
+COPY vod.conf /etc/nginx/nginx.conf
+
+EXPOSE 443
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

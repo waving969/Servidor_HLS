@@ -1,25 +1,31 @@
 version: '3.1'
 
 services:
-  nginx1:
-    image: nginx:pf
-    ports:
-      - 8080:80
-      - 8081:443
+  CDN1:
+    image: servidorhls:pf
+    # ports: 
+    #   - 8080:80
+    #   - 8070:443
     networks:
-      red_web: 
+      my_bridge:
         ipv4_address: 192.168.10.2
 
+  Transcoder:
+    image: transcoder:pf
+    # ports: 
+    #   - 8081:80
+    #   - 8071:443
+    networks:
+      my_bridge:
+        ipv4_address: 192.168.10.3
+
 networks:
-  red_web:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 192.168.10.0/24
-  red_servicios:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 192.168.20.0/24
+  my_bridge: 
+    external: 
+      name: my_bridge
+  # red_servicios:
+  #   driver: bridge
+  #   ipam:
+  #     driver: default
+  #     config:
+  #       - subnet: 192.168.20.0/24
